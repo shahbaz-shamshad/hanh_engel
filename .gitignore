@@ -1,0 +1,11 @@
+.idea/
+target/
+uploads/
+*.iml
+*.class
+*.jar
+*.war
+*.ear
+.DS_Store
+*.log
+
