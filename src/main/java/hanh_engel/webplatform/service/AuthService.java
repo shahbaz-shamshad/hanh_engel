@@ -7,6 +7,7 @@ import hanh_engel.webplatform.entity.Role;
 import hanh_engel.webplatform.repository.UserRepository;
 import hanh_engel.webplatform.security.JwtUtil;
 import hanh_engel.webplatform.util.VerificationCodeGenerator;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,20 +73,20 @@ public class AuthService {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setRole(Role.USER);
 
-            String verificationCode = VerificationCodeGenerator.generateVerificationCode();
+            // Generate 4-digit verification code
+            String verificationCode = RandomStringUtils.randomNumeric(4);
             user.setVerificationCode(verificationCode);
             user.setVerified(false);
 
             User savedUser = userRepository.save(user);
             logger.info("User registered successfully with ID: {}", savedUser.getId());
 
-
+            // Send verification email
             sendVerificationEmail(savedUser.getEmail(), verificationCode);
 
             UserResponse userResponse = new UserResponse();
             userResponse.setId(savedUser.getId());
             userResponse.setEmail(savedUser.getEmail());
-            userResponse.setVerificationCode(savedUser.getVerificationCode());
 
             return userResponse;
         } catch (Exception e) {

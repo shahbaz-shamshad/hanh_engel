@@ -77,7 +77,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 path.startsWith("/api/forgot-password") ||
                 path.startsWith("/api/reset-password") ||
                 path.startsWith("/api/verify-email") ||
-                path.startsWith("/api/complete-profile");
+                path.startsWith("/api/category") ||
+                path.startsWith("/api/complete-profile") ;
     }
 
     private String extractToken(HttpServletRequest request) {

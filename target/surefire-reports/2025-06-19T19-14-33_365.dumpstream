@@ -1,0 +1,5 @@
+# Created at 2025-06-19T19:14:34.237
+Boot Manifest-JAR contains absolute paths in classpath 'D:\Hanh-Engel\backend\webplatform-Backend-First-Milestone-render-postgre\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

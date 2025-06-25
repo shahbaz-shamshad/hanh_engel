@@ -6,6 +6,7 @@ import hanh_engel.webplatform.dto.UpdateProfileDto;
 import hanh_engel.webplatform.service.CompleteProfileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +16,14 @@ public class CompleteProfileController {
 
     @Autowired
     private CompleteProfileService completeProfileService;
-    @PostMapping("/complete-profile")
+
+    @PostMapping(value = "/complete-profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<ProfileResponseDto>> completeProfile(
-            @RequestParam("email")String email,
+            @RequestPart("email") String email,  // Only changed this annotation
             @ModelAttribute @Valid UpdateProfileDto request
     ) {
+        // Keep all existing logic
         ProfileResponseDto profileResponseDto = completeProfileService.completeProfile(email, request);
-        return ResponseEntity.ok(ApiResponse.success(
-                "Profile completed",
-                profileResponseDto
-        ));
+        return ResponseEntity.ok(ApiResponse.success("Profile completed", profileResponseDto));
     }
 }

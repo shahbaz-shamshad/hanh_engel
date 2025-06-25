@@ -53,18 +53,7 @@ public class UpdateProfileController {
 
 
     }
-//    @PostMapping("/complete-profile")
-//    public ResponseEntity<ApiResponse<ProfileResponseDto>> completeProfile(
-//            @RequestHeader("Authorization") String token,
-//            @ModelAttribute @Valid UpdateProfileDto request
-//    ) {
-//        String jwt = token.replace("Bearer ", "").trim();
-//        User updatedUser = updateProfileService.updateProfile(jwt, request);
-//        return ResponseEntity.ok(ApiResponse.success(
-//                "Profile completed",
-//                new ProfileResponseDto(updatedUser)
-//        ));
-//    }
+
 
 
 }

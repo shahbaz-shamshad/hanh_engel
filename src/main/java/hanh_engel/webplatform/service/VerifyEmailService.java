@@ -25,9 +25,14 @@ public class VerifyEmailService {
                         return new RuntimeException("User not found");
                     });
 
+            if (user.isVerified()) {
+                logger.warn("Email already verified: {}", email);
+                throw new RuntimeException("Email already verified");
+            }
+
             if (!code.equals(user.getVerificationCode())) {
                 logger.warn("Email verification failed - Invalid code for email: {}", email);
-                throw new RuntimeException("Invalid or expired code");
+                throw new RuntimeException("Invalid verification code");
             }
 
             user.setVerified(true);
@@ -35,7 +40,7 @@ public class VerifyEmailService {
             logger.info("Email verified successfully for: {}", email);
         } catch (Exception e) {
             logger.error("Email verification failed for: {} - Error: {}", email, e.getMessage());
-            throw new RuntimeException("Email verification failed", e);
+            throw new RuntimeException("Email verification failed: " + e.getMessage());
         }
     }
 }

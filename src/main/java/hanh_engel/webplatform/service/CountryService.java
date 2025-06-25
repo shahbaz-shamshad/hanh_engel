@@ -1,13 +1,10 @@
-// hanh_engel/webplatform/service/CountryService.java
 package hanh_engel.webplatform.service;
 
 import hanh_engel.webplatform.dto.CountryResponse;
 import hanh_engel.webplatform.entity.Country;
 import hanh_engel.webplatform.entity.User;
-import hanh_engel.webplatform.exception.GlobalExceptionHandler;
 import hanh_engel.webplatform.exception.ResourceNotFoundException;
 import hanh_engel.webplatform.repository.UserRepository;
-import hanh_engel.webplatform.security.JwtUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +19,12 @@ public class CountryService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
     @Transactional
-    public CountryResponse selectCountry(String token, Country country) {
-        if (!jwtUtil.validateToken(token)) {
-            logger.warn("Country selection failed - Invalid token");
-            throw new SecurityException("Ungültiges Token");
+    public CountryResponse selectCountry(String email, Country country) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email ist erforderlich");
         }
 
-        String email = jwtUtil.extractEmail(token);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> {
                     logger.warn("User not found for email: {}", email);
@@ -49,13 +41,11 @@ public class CountryService {
 
         logger.info("Country {} selected for user: {}", country, email);
 
-
         return new CountryResponse(
                 getGermanCountryName(country),
                 "Ihr Land wurde erfolgreich gespeichert"
         );
     }
-
 
     private String getGermanCountryName(Country country) {
         switch(country) {
