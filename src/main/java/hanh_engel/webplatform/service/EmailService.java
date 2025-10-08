@@ -23,7 +23,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setFrom("no-reply@hanh-engel.com"); // Add this with a verified SendGrid email
+            helper.setFrom("shahbazinsari@gmail.com"); // Add this with a verified SendGrid email
             helper.setText(body);
             javaMailSender.send(message);
             logger.info("Email sent successfully to: {}", to);
